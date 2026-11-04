@@ -1,0 +1,9 @@
+torch>=2.0
+numpy
+scipy
+matplotlib
+pandas
+jupyter
+# optional, for the molecular part (Part 8):
+# mdtraj          # trajectories / topology
+# deeptime        # TICA, Markov state models (proteins, App. C.6)
