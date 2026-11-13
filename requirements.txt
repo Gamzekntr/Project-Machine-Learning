@@ -1,0 +1,15 @@
+# Python 3.10 or 3.11 (bgmol does not install on 3.12+)
+numpy<2
+setuptools<81
+torch
+scipy
+matplotlib
+openmm
+mdtraj
+tables
+pyyaml
+requests
+einops
+ipython
+git+https://github.com/noegroup/bgflow.git
+git+https://github.com/noegroup/bgmol.git
