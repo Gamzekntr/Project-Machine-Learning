@@ -12,7 +12,7 @@ import torch
 import matplotlib.pyplot as plt
 
 try:                                                    # teammates' implementation
-    from data import load_data, muller_brown_potential, muller_brown_force
+    from mueller_brown import mueller_brown_potential, mueller_brown_force
 except ImportError:                                     # temporary stand-in
     from standin import load_data, muller_brown_potential, muller_brown_force
     print("note: using standin.py (teammates' `data` module not found)")
@@ -62,7 +62,7 @@ def main():
     print(f"PMF error generated vs reference : {pmf_error(ref_np, gen_np, ranges):.3f}")
     print(f"PMF error noise floor (half/half): {pmf_error(ref_np[:half], ref_np[half:], ranges):.3f}")
     chk = check_units(model, norm, x_phys[:5000].to(dev), a.kT,
-                      muller_brown_potential, muller_brown_force)
+                      _brown_potential, _brown_force)
     print("units check vs analytic potential/force:",
           {k: round(v, 3) for k, v in chk.items()})
 
@@ -77,10 +77,10 @@ def main():
     for ax, (name, s) in zip(axs[:2], {"Reference (Langevin)": ref_np,
                                        "Generated (reverse SDE)": gen_np}.items()):
         _, im = viz.plot_density_xy(s, ax=ax, extent=extent, title=name, colorbar=False,
-                                    potential_fn=muller_brown_potential, kT=a.kT)
+                                    potential_fn=mueller_brown_potential, kT=a.kT)
     viz.plot_energy_map(E, extent, ax=axs[2], colorbar=False,
                         title=r"Learned energy $E_\theta(x, t\to 0)$",
-                        potential_fn=muller_brown_potential, kT=a.kT)
+                        potential_fn=mueller_brown_potential, kT=a.kT)
     fig.colorbar(im, ax=axs[:3], fraction=0.02, pad=0.02).set_label(r"Energy / $k_BT$")
     axs[3].plot(np.arange(1, len(losses) + 1), losses, color=viz.COLORS[1])
     axs[3].set_xlabel("epoch"); axs[3].set_ylabel("DSM loss")
